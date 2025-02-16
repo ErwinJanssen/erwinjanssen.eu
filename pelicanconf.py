@@ -3,6 +3,7 @@ SITENAME = "Erwin Janssen"
 SITEURL = ""
 
 PATH = "content"
+THEME = "theme"
 
 TIMEZONE = "Europe/Amsterdam"
 
