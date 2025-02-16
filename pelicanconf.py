@@ -8,6 +8,9 @@ TIMEZONE = "Europe/Amsterdam"
 
 DEFAULT_LANG = "en"
 
+ARTICLE_URL = "post/{slug}.html"
+ARTICLE_SAVE_AS = ARTICLE_URL
+
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
 CATEGORY_FEED_ATOM = None
