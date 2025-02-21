@@ -28,8 +28,8 @@ LINKS = (
 
 # Social widget
 SOCIAL = (
-    ("You can add links in your config file", "#"),
-    ("Another social link", "#"),
+    ("GitHub", "https://github.com/ErwinJanssen/"),
+    ("Mastodon", "https://mastodon.social/@erwinjanssen"),
 )
 
 DEFAULT_PAGINATION = 10
