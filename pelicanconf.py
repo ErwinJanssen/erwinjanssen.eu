@@ -40,3 +40,11 @@ DEFAULT_PAGINATION = 10
 PLUGINS = [
     "pelican.plugins.pandoc_reader",
 ]
+
+PANDOC_ARGS = [
+    # This allows the headings in the Markdown document to be level 1 headings,
+    # which then convert to `<h2>` headings in the HTML output. This in turn
+    # makes it easier to convert the document to a PDF using Pandoc. Check
+    # https://github.com/jgm/pandoc/issues/5071 for more info.
+    "--base-header-level=2",
+]
