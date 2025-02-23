@@ -30,6 +30,7 @@ LINKS = (
 SOCIAL = (
     ("GitHub", "https://github.com/ErwinJanssen/"),
     ("Mastodon", "https://mastodon.social/@erwinjanssen"),
+    ("LinkedIn", "https://www.linkedin.com/in/ejjanssen/"),
 )
 
 DEFAULT_PAGINATION = 10
