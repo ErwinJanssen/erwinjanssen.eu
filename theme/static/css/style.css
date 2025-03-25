@@ -3,3 +3,8 @@ body {
   margin: auto;
   padding: 0 0.5rem;
 }
+
+body > main {
+  border-style: solid;
+  border-width: thin 0 thin 0;
+}
