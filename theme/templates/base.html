@@ -74,6 +74,17 @@
             Proudly powered by <a rel="nofollow" href="https://getpelican.com/">Pelican</a>,
             which takes great advantage of <a rel="nofollow" href="https://www.python.org/">Python</a>.
           </address>
+
+          {% if SOCIAL %}
+            <div class="social">
+              <h2>Social</h2>
+              <ul>
+                {% for name, link in SOCIAL %}
+                <li><a href="{{ link }}">{{ name }}</a></li>
+                {% endfor %}
+              </ul>
+            </div>
+          {% endif %}
         {% endblock footer %}
       </footer>
     {% endblock body %}
