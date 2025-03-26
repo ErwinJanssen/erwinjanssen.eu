@@ -12,6 +12,11 @@ DEFAULT_LANG = "en"
 ARTICLE_URL = "post/{slug}.html"
 ARTICLE_SAVE_AS = ARTICLE_URL
 
+# Site has only one author, no need for dedicated author page and listing.
+AUTHOR_URL = ""
+AUTHOR_SAVE_AS = ""
+AUTHORS_SAVE_AS = ""
+
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
 CATEGORY_FEED_ATOM = None
