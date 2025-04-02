@@ -1,6 +1,10 @@
 ---
 title: Understanding `is` vs. `==` in Python
 date: "2025-04-02"
+summary: |
+    Explores the differences between Python's `is` and `==` operators, covering
+    object identity vs. value equality. Highlights common pitfalls and best
+    practices.
 ---
 
 # Quick summary for those in a hurry
