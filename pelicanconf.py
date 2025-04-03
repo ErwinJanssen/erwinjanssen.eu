@@ -9,8 +9,8 @@ TIMEZONE = "Europe/Amsterdam"
 
 DEFAULT_LANG = "en"
 
-ARTICLE_URL = "post/{slug}.html"
-ARTICLE_SAVE_AS = ARTICLE_URL
+ARTICLE_URL = "post/{slug}"
+ARTICLE_SAVE_AS = f"{ARTICLE_URL}.html"
 
 # Site has only one author, no need for dedicated author page and listing.
 AUTHOR_URL = ""
