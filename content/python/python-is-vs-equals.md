@@ -151,6 +151,7 @@ values.
 
 Luckily, recent versions of CPython and PyPy will warn against this incorrect
 usage of `is` with a `SyntaxWarning`, but only when comparing to literals:
+
 -   CPython: `SyntaxWarning: "is" with 'int' literal. Did you mean "=="?`
 -   PyPy: `SyntaxWarning: "is" with a literal. Did you mean "=="?`
 
@@ -232,6 +233,7 @@ a variable is `None`.
 
 But you might wonder "why the exception if `== None` and `!= None` work as
 well? This has multiple reasons:
+
 -   The `==` operator can be overloaded. So in theory it is possible to
     implement `__eq__()` is such a way that `x == None` would evaluate to
     `True` even though `x` might not be `None` at all. Using `is` ensures that
