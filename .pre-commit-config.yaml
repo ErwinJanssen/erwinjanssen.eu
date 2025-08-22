@@ -18,3 +18,14 @@ repos:
         args: [--fix]
       # Run the formatter.
       - id: ruff-format
+
+  - repo: https://github.com/hukkin/mdformat
+    rev: 0.7.22
+    hooks:
+      - id: mdformat
+        additional_dependencies:
+          # Correctly parse and format frontmatter.
+          - mdformat-frontmatter
+
+          # Format tables to keep them readable in the source,
+          - mdformat-tables
