@@ -1,32 +1,31 @@
 ---
 slug: python-is-vs-equal
 title: Understanding `is` vs. `==` in Python
-date: "2025-04-04"
-summary: |
-    Explores the differences between Python's `is` and `==` operators, covering
-    object identity vs. value equality. Highlights common pitfalls and best
-    practices.
+date: '2025-04-04'
+summary: |-
+  Explores the differences between Python's `is` and `==` operators, covering
+  object identity vs. value equality. Highlights common pitfalls and best
+  practices.
 ---
 
 # Quick summary for those in a hurry
 
--   **Identity vs. equality**:
-    -   `x is y`: Checks if variables `x` and `y` reference the **same
-        object**. This is an identity check, equivalent to `id(x) == id(y)`.
-    -   `x == y`: Checks if objects `x` and `y` have the **same value**. This
-        is an equality check, which translates to `x.__eq__(y)`.
--   **Common pitfalls**:
-    -   Incorrect usage of `is` to compare numbers, strings, or other immutable
-        types might resolve to `True` due to optimizations like interning.
-    -   Do not rely on these optimizations since they are
-        implementation-specific (e.g., CPython, PyPy).
--   **Best practices**:
-    -   Use `is` for checking if `something is None` or `something is not
-        None`.
-    -   Use `==` for all other equality comparisons and implement `__eq__()` in
-        custom classes if needed.
-    -   There are valid use cases for `is`, but only if you are confident about
-        what you are doing.
+- **Identity vs. equality**:
+  - `x is y`: Checks if variables `x` and `y` reference the **same object**.
+    This is an identity check, equivalent to `id(x) == id(y)`.
+  - `x == y`: Checks if objects `x` and `y` have the **same value**. This is an
+    equality check, which translates to `x.__eq__(y)`.
+- **Common pitfalls**:
+  - Incorrect usage of `is` to compare numbers, strings, or other immutable
+    types might resolve to `True` due to optimizations like interning.
+  - Do not rely on these optimizations since they are implementation-specific
+    (e.g., CPython, PyPy).
+- **Best practices**:
+  - Use `is` for checking if `something is None` or `something is not None`.
+  - Use `==` for all other equality comparisons and implement `__eq__()` in
+    custom classes if needed.
+  - There are valid use cases for `is`, but only if you are confident about
+    what you are doing.
 
 For a more in-depth look at how `is` and `==` work, potential pitfalls, and
 best practices, keep reading.
@@ -56,8 +55,6 @@ Python documentation][python.org-is]:
 > true if and only if `x` and `y` are the same object. An Object's identity is
 > determined using the `id()` function. `x is not y` yields the inverse truth
 > value.
-
-[python.org-is]: https://docs.python.org/3/reference/expressions.html#is-not
 
 In other words, `x is y` is the same as evaluating `id(x) == id(y)`. The
 behavior of the `is` operator is consistent regardless of the objects being
@@ -130,7 +127,6 @@ return `False` even if `x` equals 5, but under some conditions, it might return
 `True`. These optimizations are dependent on the Python implementation. The
 table below illustrates this with some examples.
 
-
 | Statement                                         | CPython | PyPy    | RustPython |
 | :------------------------------------------------ | :------ | :------ | :--------- |
 | `256 is 256`                                      | `True`  | `True`  | `True`     |
@@ -152,8 +148,8 @@ values.
 Luckily, recent versions of CPython and PyPy will warn against this incorrect
 usage of `is` with a `SyntaxWarning`, but only when comparing to literals:
 
--   CPython: `SyntaxWarning: "is" with 'int' literal. Did you mean "=="?`
--   PyPy: `SyntaxWarning: "is" with a literal. Did you mean "=="?`
+- CPython: `SyntaxWarning: "is" with 'int' literal. Did you mean "=="?`
+- PyPy: `SyntaxWarning: "is" with a literal. Did you mean "=="?`
 
 ## Reflexivity
 
@@ -163,8 +159,6 @@ that objects without an `__eq__()` method only compare equal to themselves.
 When implementing custom `__eq__()` methods, reflexivity usually follows
 naturally. However, it is possible to break reflexivity. Consider the following
 example:
-
-[wikipedia-reflexive-relation]: https://en.wikipedia.org/wiki/Reflexive_relation
 
 ```python
 class BadEq:
@@ -196,8 +190,6 @@ Floating-Point Arithmetic (IEEE 754) dictates that NaN should not be equal to
 anything, including itself. For this reason, to check if a variable is NaN, use
 `math.isnan()`.
 
-[python.org-nan]: https://docs.python.org/3/library/math.html#math.nan
-
 ```python
 from math import nan, isnan  # or `nan = float("nan")`
 
@@ -205,7 +197,6 @@ print(nan is nan)  # True
 print(nan == nan)  # False
 print(isnan(nan))  # True
 ```
-
 
 # Best practices for using `is` and `==`
 
@@ -223,8 +214,6 @@ comparisons. You can also consider using the standard library module
 [`dataclasses`][python.org-dataclasses], which automatically implements
 `__eq__()` based on the class's attributes.
 
-[python.org-dataclasses]: https://docs.python.org/3/library/dataclasses.html
-
 ## Always use `is` for `None` (and other singletons)
 
 In Python, `None` is guaranteed to be a singleton, all occurrences of `None`
@@ -234,12 +223,12 @@ a variable is `None`.
 But you might wonder "why the exception if `== None` and `!= None` work as
 well? This has multiple reasons:
 
--   The `==` operator can be overloaded. So in theory it is possible to
-    implement `__eq__()` is such a way that `x == None` would evaluate to
-    `True` even though `x` might not be `None` at all. Using `is` ensures that
-    you are checking what you want.
--   Using `is` has a small performance benefit over `==` since it does not have
-    look up and invoke the correct `__eq__()` for the object being compared.
+- The `==` operator can be overloaded. So in theory it is possible to implement
+  `__eq__()` is such a way that `x == None` would evaluate to `True` even
+  though `x` might not be `None` at all. Using `is` ensures that you are
+  checking what you want.
+- Using `is` has a small performance benefit over `==` since it does not have
+  look up and invoke the correct `__eq__()` for the object being compared.
 
 There are more singletons in Python, the most notable being `True` and `False`.
 It is therefore perfectly valid to do `if something is False`. This pattern is
@@ -343,3 +332,8 @@ bugs.
 All in all, it shows the importance of understanding Python's fundamentals. By
 adhering to the best practices, your code will be clearer, more predictable,
 and ultimately more maintainable.
+
+[python.org-dataclasses]: https://docs.python.org/3/library/dataclasses.html
+[python.org-is]: https://docs.python.org/3/reference/expressions.html#is-not
+[python.org-nan]: https://docs.python.org/3/library/math.html#math.nan
+[wikipedia-reflexive-relation]: https://en.wikipedia.org/wiki/Reflexive_relation
