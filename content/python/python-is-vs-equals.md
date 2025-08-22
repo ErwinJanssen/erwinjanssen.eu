@@ -1,16 +1,16 @@
 ---
+date: 2025-04-04
 slug: python-is-vs-equal
-title: Understanding `is` vs. `==` in Python
-date: "2025-04-04"
 summary: |
-    Explores the differences between Python's `is` and `==` operators, covering
-    object identity vs. value equality. Highlights common pitfalls and best
-    practices.
+  Explores the differences between Python's `is` and `==` operators, covering
+  object identity vs. value equality. Highlights common pitfalls and best
+  practices.
+title: Understanding `is` vs. `==` in Python
 ---
 
 # Quick summary for those in a hurry
 
--   **Identity vs. equality**:
+-   **Identity vs. equality**:
     -   `x is y`: Checks if variables `x` and `y` reference the **same
         object**. This is an identity check, equivalent to `id(x) == id(y)`.
     -   `x == y`: Checks if objects `x` and `y` have the **same value**. This
@@ -21,8 +21,8 @@ summary: |
     -   Do not rely on these optimizations since they are
         implementation-specific (e.g., CPython, PyPy).
 -   **Best practices**:
-    -   Use `is` for checking if `something is None` or `something is not
-        None`.
+    -   Use `is` for checking if `something is None` or
+        `something is not     None`.
     -   Use `==` for all other equality comparisons and implement `__eq__()` in
         custom classes if needed.
     -   There are valid use cases for `is`, but only if you are confident about
@@ -50,21 +50,21 @@ differ.
 
 The operators `is` and `is not` perform an identity comparison by checking if
 two variables point to the same object in memory. As described by the [official
-Python documentation][python.org-is]:
+Python documentation][]:
+
+  [official Python documentation]: https://docs.python.org/3/reference/expressions.html#is-not
 
 > The operators `is` and `is not` test for an object's identity: `x is y` is
 > true if and only if `x` and `y` are the same object. An Object's identity is
 > determined using the `id()` function. `x is not y` yields the inverse truth
 > value.
 
-[python.org-is]: https://docs.python.org/3/reference/expressions.html#is-not
-
 In other words, `x is y` is the same as evaluating `id(x) == id(y)`. The
 behavior of the `is` operator is consistent regardless of the objects being
 compared because neither the `is` operator nor the built-in `id()` function can
 be overloaded.
 
-```python
+``` python
 a = [1, 2, 3]
 b = a
 c = [1, 2, 3]
@@ -85,7 +85,7 @@ implemented in a class.
 
 ### Example
 
-```python
+``` python
 class Container:
     def __init__(self, data):
         self.data = data
@@ -98,7 +98,7 @@ print(container == Container("test"))  # False, no `__eq__()` method defined
 Even though two objects are created with the same attributes, they are not
 automatically equal. This can be resolved by adding a custom `__eq__()` method:
 
-```python
+``` python
 class Container:
     def __init__(self, data):
         self.data = data
@@ -130,19 +130,29 @@ return `False` even if `x` equals 5, but under some conditions, it might return
 `True`. These optimizations are dependent on the Python implementation. The
 table below illustrates this with some examples.
 
+  ------------------------------------------------------------------------------------
+  Statement                                           CPython   PyPy      RustPython
+  --------------------------------------------------- --------- --------- ------------
+  `256 is 256`                                        `True`    `True`    `True`
 
-| Statement                                         | CPython | PyPy    | RustPython |
-| :------------------------------------------------ | :------ | :------ | :--------- |
-| `256 is 256`                                      | `True`  | `True`  | `True`     |
-| `x = 256; x is 256`                               | `True`  | `True`  | `True`     |
-| `257 is 257`                                      | `True`  | `True`  | `True`     |
-| `x = 257; x is 257`                               | `False` | `True`  | `True`     |
-| `x = "test"; x is "test"`                         | `True`  | `True`  | `True`     |
-| `x = "something longer"; x is "something longer"` | `False` | `True`  | `True`     |
-| `() is ()`                                        | `True`  | `True`  | `True`     |
-| `(1, 2, 3) is (1, 2, 3)`                          | `True`  | `True`  | `False`    |
-| `x = (1, 2, 3); x is (1, 2, 3)`                   | `False` | `True`  | `False`    |
-| `tuple(range(1, 4)) is tuple(range(1, 4))`        | `False` | `False` | `False`    |
+  `x = 256; x is 256`                                 `True`    `True`    `True`
+
+  `257 is 257`                                        `True`    `True`    `True`
+
+  `x = 257; x is 257`                                 `False`   `True`    `True`
+
+  `x = "test"; x is "test"`                           `True`    `True`    `True`
+
+  `x = "something longer"; x is "something longer"`   `False`   `True`    `True`
+
+  `() is ()`                                          `True`    `True`    `True`
+
+  `(1, 2, 3) is (1, 2, 3)`                            `True`    `True`    `False`
+
+  `x = (1, 2, 3); x is (1, 2, 3)`                     `False`   `True`    `False`
+
+  `tuple(range(1, 4)) is tuple(range(1, 4))`          `False`   `False`   `False`
+  ------------------------------------------------------------------------------------
 
 The reason for these results is that Python implementations perform certain
 optimizations, such as 'interning', for frequently used immutable values. These
@@ -151,21 +161,21 @@ values.
 
 Luckily, recent versions of CPython and PyPy will warn against this incorrect
 usage of `is` with a `SyntaxWarning`, but only when comparing to literals:
+
 -   CPython: `SyntaxWarning: "is" with 'int' literal. Did you mean "=="?`
 -   PyPy: `SyntaxWarning: "is" with a literal. Did you mean "=="?`
 
 ## Reflexivity
 
 In general, if `x is y`, then `x == y` is also `True`. This property is known
-as a [reflexive relation][wikipedia-reflexive-relation], and it is the reason
-that objects without an `__eq__()` method only compare equal to themselves.
-When implementing custom `__eq__()` methods, reflexivity usually follows
-naturally. However, it is possible to break reflexivity. Consider the following
-example:
+as a [reflexive relation], and it is the reason that objects without an
+`__eq__()` method only compare equal to themselves. When implementing custom
+`__eq__()` methods, reflexivity usually follows naturally. However, it is
+possible to break reflexivity. Consider the following example:
 
-[wikipedia-reflexive-relation]: https://en.wikipedia.org/wiki/Reflexive_relation
+  [reflexive relation]: https://en.wikipedia.org/wiki/Reflexive_relation
 
-```python
+``` python
 class BadEq:
     def __eq__(self, other):
         return False
@@ -175,10 +185,10 @@ print(bad_eq is bad_eq)  # True, it is the same instance.
 print(bad_eq == bad_eq)  # False, because of the custom __eq__().
 ```
 
-Python itself makes several assumptions about reflexivity. For example,
-a `list` is always equal to itself, regardless of its contents:
+Python itself makes several assumptions about reflexivity. For example, a
+`list` is always equal to itself, regardless of its contents:
 
-```python
+``` python
 class BadEq:
     def __eq__(self, other):
         return False
@@ -190,21 +200,20 @@ print(all(x == x for x in lst))  # False, because of BadEq.__eq__()
 ```
 
 Custom classes aside, reflexivity holds for all built-in classes and types,
-with one notable exception: [NaN][python.org-nan]. The IEEE Standard for
-Floating-Point Arithmetic (IEEE 754) dictates that NaN should not be equal to
-anything, including itself. For this reason, to check if a variable is NaN, use
+with one notable exception: [NaN]. The IEEE Standard for Floating-Point
+Arithmetic (IEEE 754) dictates that NaN should not be equal to anything,
+including itself. For this reason, to check if a variable is NaN, use
 `math.isnan()`.
 
-[python.org-nan]: https://docs.python.org/3/library/math.html#math.nan
+  [NaN]: https://docs.python.org/3/library/math.html#math.nan
 
-```python
+``` python
 from math import nan, isnan  # or `nan = float("nan")`
 
 print(nan is nan)  # True
 print(nan == nan)  # False
 print(isnan(nan))  # True
 ```
-
 
 # Best practices for using `is` and `==`
 
@@ -219,19 +228,20 @@ based on their value instead, for which you should use `==`.
 
 Implement `__eq__()` for custom classes to have more meaningful value
 comparisons. You can also consider using the standard library module
-[`dataclasses`][python.org-dataclasses], which automatically implements
-`__eq__()` based on the class's attributes.
+[`dataclasses`], which automatically implements `__eq__()` based on the class's
+attributes.
 
-[python.org-dataclasses]: https://docs.python.org/3/library/dataclasses.html
+  [`dataclasses`]: https://docs.python.org/3/library/dataclasses.html
 
 ## Always use `is` for `None` (and other singletons)
 
 In Python, `None` is guaranteed to be a singleton, all occurrences of `None`
-reference the same object. As such, you can use `is` and `is not` to check if
-a variable is `None`.
+reference the same object. As such, you can use `is` and `is not` to check if a
+variable is `None`.
 
 But you might wonder "why the exception if `== None` and `!= None` work as
 well? This has multiple reasons:
+
 -   The `==` operator can be overloaded. So in theory it is possible to
     implement `__eq__()` is such a way that `x == None` would evaluate to
     `True` even though `x` might not be `None` at all. Using `is` ensures that
@@ -245,7 +255,7 @@ rarely used, and often `if not something` suffices, but it is not the same.
 Empty collections, empty strings, and the number 0 are all treated as `False`
 in an `if` statement, but they are not identical to `False`:
 
-```python
+``` python
 print(not [])  # True, because `bool([])` returns `False`.
 print([] is False)  # False, because these are different objects.
 ```
@@ -254,7 +264,7 @@ Little known fact: there are more builtin singletons in Python, but those are
 never really treated as such. Some examples are the elipses `...` and
 `NotImplemented`. You can check this for yourself:
 
-```python
+``` python
 print(type(...))  # <class 'ellipsis'>
 print(type(...)() is ...)  # True
 print(type(NotImplemented)() is NotImplemented)  # True
@@ -266,7 +276,7 @@ Sometimes you truly need to know if two variables point to the same object. One
 example is when caching values and wanting to verify that something is indeed
 cached.
 
-```python
+``` python
 class ExpensiveObject:
     def __init__(self, value):
         self.value = value
@@ -292,7 +302,7 @@ examples that illustrate why.
 
 `isinstance()` handles subclasses:
 
-```python
+``` python
 class CustomString(str):
     pass
 
@@ -306,7 +316,7 @@ print(isinstance(custom_text, str))  # True, `isinstance` handles subclasses
 
 `isinstance()` can check against multiple types:
 
-```python
+``` python
 x = 5
 print(type(x) is int or type(x) is float)  # Requires chained `type` and `or`
 print(isinstance(x, (int, float))  # Can check against multiple types.
@@ -318,7 +328,7 @@ abstract base class as its actual type. In this example, using `isinstance`
 with `numbers.Number` will match any kind of number type, including the other
 built-in number type `complex`.
 
-```python
+``` python
 import numbers
 
 print(isinstance(5, numbers.Number))  # True
