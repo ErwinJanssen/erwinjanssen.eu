@@ -1,7 +1,23 @@
+:root {
+  --lightness: 80%;
+  --chroma: 20%;
+  --accent-hue: 300;
+}
+
+html {
+  --background-color: oklch(var(--lightness) var(--chroma) var(--accent-hue));
+  background-color: var(--background-color);
+}
+
 body {
   max-width: 50rem;
   margin: auto;
   padding: 0 0.5rem;
+}
+
+body > header {
+  background-color: oklch(from var(--background-color) calc(1 - l * .5) c h)
+
 }
 
 body > main {
