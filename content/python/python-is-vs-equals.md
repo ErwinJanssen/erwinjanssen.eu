@@ -87,6 +87,7 @@ class Container:
     def __init__(self, data):
         self.data = data
 
+
 container = Container("test")
 print(container is Container("test"))  # False, a new object is created
 print(container == Container("test"))  # False, no `__eq__()` method defined
@@ -102,6 +103,7 @@ class Container:
 
     def __eq__(self, other):
         return isinstance(other, type(self)) and self.data == other.data
+
 
 container = Container("test")
 print(container is Container("test"))  # False, a new object is created
@@ -165,6 +167,7 @@ class BadEq:
     def __eq__(self, other):
         return False
 
+
 bad_eq = BadEq()
 print(bad_eq is bad_eq)  # True, it is the same instance.
 print(bad_eq == bad_eq)  # False, because of the custom __eq__().
@@ -177,6 +180,7 @@ a `list` is always equal to itself, regardless of its contents:
 class BadEq:
     def __eq__(self, other):
         return False
+
 
 lst = [bad_eq]
 print(lst is lst)  # True, same object
@@ -262,10 +266,12 @@ class ExpensiveObject:
     def __init__(self, value):
         self.value = value
 
+
 def get_expensive_object(key):
     if cache.get(key) is None:
         cache[key] = ExpensiveObject(key)
     return cache[key]
+
 
 cache = {}
 obj1 = get_expensive_object(42)
@@ -286,6 +292,7 @@ examples that illustrate why.
 ```python
 class CustomString(str):
     pass
+
 
 custom_text = CustomString("some text")
 

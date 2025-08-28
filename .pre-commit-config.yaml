@@ -29,3 +29,6 @@ repos:
 
           # Format tables to keep them readable in the source,
           - mdformat-tables
+
+          # Format Python code blocks with Ruff.
+          - mdformat-ruff
