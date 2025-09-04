@@ -54,4 +54,6 @@ PANDOC_ARGS = [
     # makes it easier to convert the document to a PDF using Pandoc. Check
     # https://github.com/jgm/pandoc/issues/5071 for more info.
     "--base-header-level=2",
+    # Include a table of contents by default.
+    "--table-of-contents=true",
 ]
