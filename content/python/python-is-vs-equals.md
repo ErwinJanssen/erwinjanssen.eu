@@ -8,7 +8,7 @@ summary: |-
   practices.
 ---
 
-# Quick summary for those in a hurry
+# The Essentials
 
 - **Identity vs. equality**:
   - `x is y`: Checks if variables `x` and `y` reference the **same object**.
