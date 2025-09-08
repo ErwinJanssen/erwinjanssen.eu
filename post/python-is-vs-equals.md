@@ -1,6 +1,6 @@
 ---
-slug: python-is-vs-equal
 title: Understanding `is` vs. `==` in Python
+slug: python-is-vs-equal
 date: '2025-04-04'
 abstract: |-
   Explores the differences between Python's `is` and `==` operators, covering
@@ -10,7 +10,7 @@ categories:
   - Python
 ---
 
-# The Essentials
+## The Essentials
 
 - **Identity vs. equality**:
   - `x is y`: Checks if variables `x` and `y` reference the **same object**.
@@ -32,7 +32,7 @@ categories:
 For a more in-depth look at how `is` and `==` work, potential pitfalls, and
 best practices, keep reading.
 
-# Introduction
+## Introduction
 
 When learning Python after working with languages like C, Java, or JavaScript,
 it's natural to assume that logical operators behave similarly. While `&&`,
@@ -42,7 +42,7 @@ implementation. This post aims to clarify the differences between `is` and
 `==`, highlight common pitfalls, and provide best practices to avoid these
 issues.
 
-# Fundamentals of `is` and `==`
+## Fundamentals of `is` and `==`
 
 Let's start with the basics by examining what these operators do and how they
 differ.
@@ -72,7 +72,7 @@ print(a is b)  # True, because `b` is an alias of `a`
 print(a is c)  # False, because `c` is a different list object
 ```
 
-## Equality (`==`)
+### Equality (`==`)
 
 The operators `==` and `!=` compare two objects by their values or contents.
 The statement `x == y` translates to `x.__eq__(y)`. Unlike `is`, this operator
@@ -82,7 +82,7 @@ convenient APIs. However, the downside of overloading is that this operator
 might not behave consistently, as it depends on how the `__eq__()` method is
 implemented in a class.
 
-### Example
+#### Example
 
 ```python
 class Container:
@@ -115,7 +115,7 @@ print(container == Container("test"))  # True, because of custom `__eq__()`.
 Even though this example is basic, it shows that proper method overloading can
 lead to more predictable equality checks.
 
-### Additional note on `!=`
+#### Additional note on `!=`
 
 The statement `x != y` translates to `x.__ne__(y)`, which is mostly an historic
 artifact. Since Python 3, `__ne__()` returns `not x == y` by default, but
@@ -123,7 +123,7 @@ Python 2 did not have such a relation between `==` and `!=` and `__ne__()` had
 to be implemented explicitly. The default Python 3 behavior is usually what you
 want, so `__ne__()` is rarely implemented in practice anymore.
 
-# Pitfalls
+## Pitfalls
 
 Using `is` for equality comparisons can produce unexpected results due to
 certain optimizations in Python. For example, you might expect `x is 5` to
@@ -155,7 +155,7 @@ usage of `is` with a `SyntaxWarning`, but only when comparing to literals:
 - CPython: `SyntaxWarning: "is" with 'int' literal. Did you mean "=="?`
 - PyPy: `SyntaxWarning: "is" with a literal. Did you mean "=="?`
 
-## Reflexivity
+### Reflexivity
 
 In general, if `x is y`, then `x == y` is also `True`. This property is known
 as a [reflexive relation][wikipedia-reflexive-relation], and it is the reason
@@ -204,12 +204,12 @@ print(nan == nan)  # False
 print(isnan(nan))  # True
 ```
 
-# Best practices for using `is` and `==`
+## Best practices for using `is` and `==`
 
 Now that we have discussed both operators in more detail, how do we use them
 effectively?
 
-## When in doubt, use `==`
+### When in doubt, use `==`
 
 Generally speaking, there are not many cases where you would want to compare
 the identity of two objects. Most of the time, you want to compare objects
@@ -220,7 +220,7 @@ comparisons. You can also consider using the standard library module
 [`dataclasses`][python.org-dataclasses], which automatically implements
 `__eq__()` based on the class's attributes.
 
-## Always use `is` for `None` (and other singletons)
+### Always use `is` for `None` (and other singletons)
 
 In Python, `None` is guaranteed to be a singleton, all occurrences of `None`
 reference the same object. As such, you can use `is` and `is not` to check if
@@ -257,7 +257,7 @@ print(type(...)() is ...)  # True
 print(type(NotImplemented)() is NotImplemented)  # True
 ```
 
-## Use `is` for object caches
+### Use `is` for object caches
 
 Sometimes you truly need to know if two variables point to the same object. One
 example is when caching values and wanting to verify that something is indeed
@@ -282,7 +282,7 @@ obj2 = get_expensive_object(42)
 print(obj1 is obj2)  # True, both variables point to the cached object.
 ```
 
-## Avoid using `is` or `==` for comparing types
+### Avoid using `is` or `==` for comparing types
 
 Types, especially built-in types, can generally be treated as singletons. As
 such, it is possible to use both `is` and `==` to compare them. However, this
