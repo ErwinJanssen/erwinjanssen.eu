@@ -2,7 +2,7 @@
 slug: python-is-vs-equal
 title: Understanding `is` vs. `==` in Python
 date: '2025-04-04'
-summary: |-
+abstract: |-
   Explores the differences between Python's `is` and `==` operators, covering
   object identity vs. value equality. Highlights common pitfalls and best
   practices.
