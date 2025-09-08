@@ -6,6 +6,8 @@ summary: |-
   Explores the differences between Python's `is` and `==` operators, covering
   object identity vs. value equality. Highlights common pitfalls and best
   practices.
+categories:
+  - Python
 ---
 
 # The Essentials
