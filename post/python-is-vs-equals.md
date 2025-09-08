@@ -10,6 +10,8 @@ categories:
   - Python
 ---
 
+::: {.callout-tip}
+
 ## The Essentials
 
 - **Identity vs. equality**:
@@ -29,8 +31,7 @@ categories:
   - There are valid use cases for `is`, but only if you are confident about
     what you are doing.
 
-For a more in-depth look at how `is` and `==` work, potential pitfalls, and
-best practices, keep reading.
+:::
 
 ## Introduction
 
