@@ -1,0 +1,27 @@
+---
+title: Built-in function `super()`
+---
+
+This example is given:
+
+```python
+class C(B):
+    def method(self, arg):
+        super().method(arg)  # This does the same thing as:
+        # super(C, self).method(arg)
+```
+
+But, if you would try to be clever and do `super(type(self), self)`, then the
+code can easily break in unexpected ways.
+
+```{python}
+#| error: true
+class Parent:
+    def __init__(self):
+        super(type(self), self).__init__()
+
+class Child(Parent):
+    pass
+
+Child()
+```
