@@ -23,6 +23,9 @@ repos:
     rev: 0.7.22
     hooks:
       - id: mdformat
+        types:
+          - file
+        files: \.(md|qmd)$
         additional_dependencies:
           # Correctly parse and format frontmatter.
           - mdformat-frontmatter
