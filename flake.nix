@@ -18,6 +18,9 @@
       devShells.${system}.default = pkgs.mkShell {
         packages = with pkgs; [
           quarto
+
+          # Pre-commit hook dependencies
+          exiftool
         ];
       };
     };
