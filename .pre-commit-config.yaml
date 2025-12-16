@@ -35,7 +35,7 @@ repos:
         files: \.(md|qmd)$
         additional_dependencies:
           # Correctly parse and format frontmatter.
-          - mdformat-frontmatter
+          - mdformat-front-matters
 
           # Format tables to keep them readable in the source,
           - mdformat-tables
