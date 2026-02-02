@@ -34,6 +34,9 @@ repos:
           - file
         files: \.(md|qmd)$
         additional_dependencies:
+          # Allow configuration of mdformat via pyproject.toml.
+          - mdformat-pyproject
+
           # Correctly parse and format frontmatter.
           - mdformat-front-matters
 
