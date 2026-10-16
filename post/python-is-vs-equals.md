@@ -310,7 +310,7 @@ print(isinstance(custom_text, str))  # True, `isinstance` handles subclasses
 ```python
 x = 5
 print(type(x) is int or type(x) is float)  # Requires chained `type` and `or`
-print(isinstance(x, (int, float))  # Can check against multiple types.
+print(isinstance(x, (int, float)))  # Can check against multiple types.
 ```
 
 There are often 'abstract base classes' available for common patterns, and
