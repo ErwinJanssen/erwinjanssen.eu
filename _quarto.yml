@@ -10,6 +10,8 @@ website:
   title: "Erwin Janssen"
   navbar:
     right:
+      - text: Series
+        file: series.md
       - icon: github
         href: https://github.com/ErwinJanssen/
       - icon: mastodon
