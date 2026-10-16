@@ -12,8 +12,8 @@ categories:
 
 Recently, I needed a way to force the Linux OOM killer to terminate a specific
 process. The goal was to test certain systemd failover behavior, because it
-turns out that systemd handles an OOM kill (`Result: oom-kill`) differently
-than a process being stopped using `kill` (`Result: signal`).
+turns out that systemd handles an OOM kill (`Result: oom-kill`) differently than
+a process being stopped using `kill` (`Result: signal`).
 
 Since I could not readily find sources on how to do this -- most resources
 discuss how to trigger the OOM killer in general, but not target a specific
@@ -24,41 +24,41 @@ myself and in case it proves useful to someone else.
 
 The most reliable and controlled method to trigger the OOM killer for a process
 is to use [control groups][kernel.org-cgroups] (cgroups). If the target process
-has its own dedicated cgroup, writing a very low value (or zero) to
-`memory.max` will cause the next memory allocation to exceed the limit,
-triggering the OOM killer.
+has its own dedicated cgroup, writing a very low value (or zero) to `memory.max`
+will cause the next memory allocation to exceed the limit, triggering the OOM
+killer.
 
-This requires that your process/service does not share its cgroup, otherwise
-you will also cause other processes to be terminated.
+This requires that your process/service does not share its cgroup, otherwise you
+will also cause other processes to be terminated.
 
 ::: {.callout-note}
 
-The kill occurs on allocation. An idle process such as `sleep` may survive
-until it attempts to allocate memory.
+The kill occurs on allocation. An idle process such as `sleep` may survive until
+it attempts to allocate memory.
 
 :::
 
 ::: {.callout-note}
 
 The control file `memory.max` is specific to cgroup v2, which is used by the
-majority of recent Linux distributions. For cgroup v1 the control file is
-called `memory.limit_in_bytes` and the hierarchy is slightly different. The
-rest of this post will assume cgroup v2.
+majority of recent Linux distributions. For cgroup v1 the control file is called
+`memory.limit_in_bytes` and the hierarchy is slightly different. The rest of
+this post will assume cgroup v2.
 
 :::
 
 ## systemd services
 
 When the target process is running as a systemd service, these cgroups are
-already in place. For a service `foo.service` with no custom resource slices,
-it can be done like this:
+already in place. For a service `foo.service` with no custom resource slices, it
+can be done like this:
 
 ```sh
 echo 0 > /sys/fs/cgroup/system.slice/foo.service/memory.max
 ```
 
-The command above assumes you are running it as root. If not, you can use
-`sudo` like this:
+The command above assumes you are running it as root. If not, you can use `sudo`
+like this:
 
 ```sh
 echo 0 | sudo tee /sys/fs/cgroup/system.slice/foo.service/memory.max
@@ -83,8 +83,8 @@ limit and will prevent the service from starting again.
 
 ## Process without a cgroup
 
-You might have a long-running process that you want to OOM kill, but the
-process lacks a dedicated cgroup. This can be solved by creating one for it, as
+You might have a long-running process that you want to OOM kill, but the process
+lacks a dedicated cgroup. This can be solved by creating one for it, as
 demonstrated by the following snippet (requires root):
 
 ```sh

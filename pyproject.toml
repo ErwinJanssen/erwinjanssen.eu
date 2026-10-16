@@ -3,6 +3,9 @@
 # item.
 number = true
 
+# Wrap lines at 80 characters where possible.
+wrap = 80
+
 [tool.ruff.lint]
 select = ["ALL"]
 extend-ignore = [
