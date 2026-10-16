@@ -25,6 +25,9 @@
         packages = with pkgs; [
           quarto
 
+          # Python with Jupyter, so Quarto can execute code cells in posts.
+          (python313.withPackages (ps: [ ps.jupyter ]))
+
           # Pre-commit hook dependencies
           exiftool
         ];
