@@ -18,6 +18,8 @@ website:
         href: https://mastodon.social/@erwinjanssen
       - icon: linkedin
         href: https://www.linkedin.com/in/ejjanssen/
+      - icon: camera
+        href: https://gram.social/erwin
 format:
   html:
     theme:
